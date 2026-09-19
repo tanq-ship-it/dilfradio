@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DILF Radio — Dads Into Legendary Finds</title>
+<title>DILF Radio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,700&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -14,9 +14,11 @@
     --amber: #C8682B;
     --teal: #3F6B66;
     --gold: #D9A441;
+    --bayou: #A97BC0;
     --line: rgba(243,234,216,0.14);
   }
   * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
   body {
     margin: 0;
     background: var(--vinyl);
@@ -27,91 +29,100 @@
   h1, h2, h3, .display { font-family: 'Fraunces', serif; }
   .mono { font-family: 'Space Mono', monospace; letter-spacing: 0.04em; }
 
-  /* ---------- HEADER / DIAL ---------- */
+  /* ---------- HEADER / DIAL (compact) ---------- */
   header {
     position: relative;
-    background: radial-gradient(120% 140% at 50% -20%, var(--walnut) 0%, var(--vinyl) 65%);
+    background: radial-gradient(120% 160% at 20% -40%, var(--walnut) 0%, var(--vinyl) 70%);
     border-bottom: 1px solid var(--line);
-    padding: 64px 24px 48px;
-    text-align: center;
-    overflow: hidden;
+    padding-block: 16px 12px;
+    padding-inline: 24px;
   }
+  .hdr-row {
+    max-width: 1080px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px 28px;
+    flex-wrap: wrap;
+  }
+  .brand { display: flex; align-items: center; gap: 14px; min-width: 0; }
   .station-id {
-    display: inline-block;
     font-family: 'Space Mono', monospace;
-    font-size: 13px;
+    font-size: 10px;
     color: var(--gold);
     border: 1px solid var(--gold);
     border-radius: 999px;
-    padding: 5px 14px;
-    margin-bottom: 22px;
+    padding: 3px 9px;
     letter-spacing: 0.12em;
+    white-space: nowrap;
   }
   h1.logo {
-    font-size: clamp(48px, 9vw, 104px);
+    font-size: clamp(26px, 3.6vw, 34px);
     font-weight: 700;
     margin: 0;
+    line-height: 1;
     color: var(--cream);
     letter-spacing: -0.02em;
+    white-space: nowrap;
   }
   h1.logo span { color: var(--amber); }
   .tagline {
-    margin: 10px 0 0;
-    font-size: clamp(15px, 2vw, 19px);
-    color: rgba(243,234,216,0.72);
+    margin: 4px 0 0;
+    font-size: 13px;
+    line-height: 1.35;
+    color: rgba(243,234,216,0.62);
     font-style: italic;
+    max-width: 52ch;
   }
 
-  /* Tuning dial */
-  .dial-wrap {
-    max-width: 640px;
-    margin: 46px auto 0;
-  }
+  /* Tuning dial, now a thin strip */
+  .dial-wrap { max-width: 1080px; margin: 12px auto 0; }
   .dial-track {
     position: relative;
-    height: 3px;
+    height: 2px;
     background: linear-gradient(90deg, var(--teal), var(--amber), var(--gold));
     border-radius: 2px;
   }
   .dial-needle {
     position: absolute;
-    top: -9px;
+    top: -5px;
     left: 28%;
     width: 2px;
-    height: 21px;
+    height: 12px;
     background: var(--cream);
-    box-shadow: 0 0 8px var(--cream);
+    box-shadow: 0 0 6px var(--cream);
   }
   .dial-labels {
     display: flex;
     justify-content: space-between;
-    margin-top: 10px;
+    margin-top: 5px;
     font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    color: rgba(243,234,216,0.5);
+    font-size: 10px;
+    color: rgba(243,234,216,0.4);
   }
-  nav.freqnav {
-    display: flex;
-    justify-content: center;
-    gap: 28px;
-    margin-top: 36px;
-    flex-wrap: wrap;
-  }
+  nav.freqnav { display: flex; gap: 6px 20px; flex-wrap: wrap; }
   nav.freqnav a {
     color: var(--cream);
     text-decoration: none;
     font-family: 'Space Mono', monospace;
-    font-size: 13px;
+    font-size: 12px;
     letter-spacing: 0.06em;
     opacity: 0.78;
     border-bottom: 1px solid transparent;
-    padding-bottom: 4px;
+    padding-bottom: 3px;
     transition: opacity 0.2s, border-color 0.2s;
   }
   nav.freqnav a:hover { opacity: 1; border-color: var(--amber); }
+  @media (max-width: 600px) {
+    header { padding-inline: 16px; }
+    .tagline { display: none; }
+    .dial-labels { display: none; }
+  }
 
   /* ---------- SECTIONS ---------- */
   section { padding: 76px 24px; max-width: 1080px; margin: 0 auto; }
+  #now-playing { padding-top: 44px; }
   .section-head {
     display: flex;
     align-items: baseline;
@@ -211,19 +222,6 @@
     letter-spacing: 0.05em;
   }
 
-  /* Setlist ticket */
-  .setlist {
-    background: var(--walnut);
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    padding: 28px;
-    position: relative;
-  }
-  .setlist h3 { margin: 0 0 4px; }
-  .setlist .place { color: var(--gold); font-family: 'Space Mono', monospace; font-size: 13px; margin-bottom: 18px; display: block; }
-  .setlist ol { padding-left: 20px; margin: 0; columns: 2; column-gap: 32px; }
-  .setlist li { margin-bottom: 8px; font-size: 14.5px; }
-
 
   /* ---------- 91.1 NOW PLAYING: SHOW REPORT ---------- */
   .np-stamp { font-size: 11px; color: rgba(243,234,216,0.45); margin: 10px 0 0; letter-spacing: 0.08em; }
@@ -242,12 +240,23 @@
   .np-card .where { font-size: 13.5px; color: rgba(243,234,216,0.6); }
   .np-card .why { font-size: 13.5px; color: rgba(243,234,216,0.75); margin-top: 8px; }
   .np-empty { color: rgba(243,234,216,0.5); font-size: 14.5px; border: 1px dashed var(--line); border-radius: 10px; padding: 14px 16px; }
-  .np-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 22px; margin-top: 40px; }
-  .np-col { background: var(--walnut); border: 1px solid var(--line); border-radius: 10px; padding: 24px 24px 18px; border-top: 3px solid var(--c); }
+  .np-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; align-items: start; }
+  .np-col { background: var(--walnut); border: 1px solid var(--line); border-radius: 10px; border-top: 3px solid var(--c); }
+  .np-col summary { list-style: none; cursor: pointer; padding: 20px 22px 16px; display: grid; gap: 8px; }
+  .np-col summary::-webkit-details-marker { display: none; }
+  .np-col summary:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; border-radius: 8px; }
   .np-col-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
   .np-col .freq-tag { font-size: 12px; color: var(--c); }
+  .np-next { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; border-top: 1px solid var(--line); padding-top: 10px; }
+  .np-next-line { font-size: 13.5px; color: rgba(243,234,216,0.8); }
+  .np-next-line b { font-weight: 600; color: var(--cream); }
+  .np-open { font-size: 11px; letter-spacing: 0.1em; color: var(--c); white-space: nowrap; }
+  .np-open::after { content: 'OPEN +'; }
+  .np-col[open] .np-open::after { content: 'CLOSE \2212'; }
+  .np-col[open] .np-next { display: none; }
+  .np-col .np-list { padding: 0 22px 14px; }
   .np-count { font-size: 11px; color: rgba(243,234,216,0.5); }
-  .np-col-sub { font-size: 14px; color: rgba(243,234,216,0.65); margin: 8px 0 14px; }
+  .np-col-sub { font-size: 14px; color: rgba(243,234,216,0.65); margin: 0; }
   .np-list { list-style: none; margin: 0; padding: 0; }
   .np-list li { display: grid; grid-template-columns: 78px 1fr; gap: 12px; padding: 11px 0; border-top: 1px solid var(--line); }
   .np-list .d { font-family: 'Space Mono', monospace; font-size: 12px; color: var(--c); line-height: 1.5; }
@@ -262,7 +271,58 @@
   .np-more[open] summary { color: rgba(243,234,216,0.5); }
   .np-more summary:focus-visible, nav.freqnav a:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
   @media (prefers-reduced-motion: reduce) { .pulse { animation: none; } }
-  @media (max-width: 600px) { .np-cols { grid-template-columns: 1fr; } .np-list li { grid-template-columns: 66px 1fr; } }
+  @media (max-width: 720px) { .np-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 600px) { .np-list li { grid-template-columns: 66px 1fr; } }
+
+
+  /* ---------- VIEW TOGGLE + VENUE VIEW ---------- */
+  .np-viewbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-top: 40px; }
+  .np-toggle { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; padding: 3px; background: var(--walnut); }
+  .np-toggle button {
+    font-family: 'Space Mono', monospace; font-size: 12px; letter-spacing: 0.08em;
+    background: transparent; color: rgba(243,234,216,0.7); border: 0; border-radius: 999px;
+    padding: 8px 16px; cursor: pointer;
+  }
+  .np-toggle button[aria-pressed="true"] { background: var(--amber); color: var(--vinyl); }
+  .np-toggle button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+  .np-viewnote { font-size: 13px; color: rgba(243,234,216,0.5); }
+  .np-viewbar + .np-grid { margin-top: 18px; }
+
+  .vf { margin-top: 18px; display: grid; gap: 16px; }
+  .vf-controls { background: var(--walnut); border: 1px solid var(--line); border-radius: 10px; padding: 16px 18px; display: flex; flex-wrap: wrap; gap: 14px; align-items: end; }
+  .vf-f { display: grid; gap: 6px; flex: 1 1 170px; font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 0.08em; color: var(--gold); }
+  .vf-f.wide { flex-basis: 240px; }
+  .vf-f input[type=search], .vf-f select {
+    font: 15px 'Inter', sans-serif; color: var(--cream); background: var(--vinyl);
+    border: 1px solid var(--line); border-radius: 7px; padding: 9px 11px; width: 100%;
+  }
+  .vf-f select option { background: var(--vinyl); color: var(--cream); }
+  .vf-f input[type=range] { width: 100%; accent-color: var(--amber); }
+  .vf-f output { color: var(--cream); letter-spacing: 0; }
+  .vf-check { display: flex; align-items: center; gap: 8px; font-size: 13.5px; color: rgba(243,234,216,0.75); flex: 1 1 100%; }
+  .vf-check input { accent-color: var(--amber); width: 16px; height: 16px; }
+  .vf-f input:focus-visible, .vf-f select:focus-visible, .vf-check input:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+  .vf-sum { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; align-items: baseline; }
+  .vf-count { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 700; }
+  .vf-count span { font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 400; color: rgba(243,234,216,0.55); margin-left: 6px; }
+  .vf-legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-family: 'Space Mono', monospace; font-size: 11px; color: rgba(243,234,216,0.6); }
+  .vf-legend i { display: inline-block; width: 9px; height: 9px; border-radius: 2px; margin-right: 6px; vertical-align: 0; }
+  .vf-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; align-items: start; }
+  .vf-venue { background: var(--walnut); border: 1px solid var(--line); border-radius: 10px; padding: 18px 20px 12px; }
+  .vf-venue.quiet { padding-bottom: 16px; opacity: 0.7; }
+  .vf-vhead { display: grid; grid-template-columns: 1fr auto; gap: 2px 12px; align-items: baseline; }
+  .vf-vname { font-family: 'Fraunces', serif; font-size: 19px; font-weight: 500; margin: 0; }
+  .vf-mi { font-family: 'Space Mono', monospace; font-size: 12px; color: var(--gold); white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .vf-where { grid-column: 1 / -1; font-size: 13px; color: rgba(243,234,216,0.55); }
+  .vf-shows { list-style: none; margin: 12px 0 0; padding: 0; }
+  .vf-shows li { display: grid; grid-template-columns: 78px 1fr; gap: 12px; padding: 9px 0; border-top: 1px solid var(--line); }
+  .vf-shows .d { font-family: 'Space Mono', monospace; font-size: 12px; line-height: 1.5; color: var(--c); }
+  .vf-shows .a { font-weight: 600; font-size: 14.5px; }
+  .vf-shows .n { display: block; font-size: 13px; color: rgba(243,234,216,0.65); }
+  .vf-band { display: inline-block; width: 9px; height: 9px; border-radius: 2px; background: var(--c); margin-right: 7px; vertical-align: 0; }
+  .vf-none { font-size: 13.5px; color: rgba(243,234,216,0.5); margin: 10px 0 0; }
+  .vf-empty { color: rgba(243,234,216,0.55); font-size: 14.5px; border: 1px dashed var(--line); border-radius: 10px; padding: 18px; text-align: center; }
+  @media (max-width: 600px) { .vf-list { grid-template-columns: 1fr; } .vf-shows li { grid-template-columns: 66px 1fr; } }
 
   footer {
     text-align: center;
@@ -276,32 +336,30 @@
   @media (max-width: 600px) {
     .post-row { grid-template-columns: 70px 1fr; }
     .post-year { font-size: 26px; }
-    .setlist ol { columns: 1; }
   }
 </style>
 </head>
 <body>
 
 <header>
-  <span class="station-id mono">ON AIR</span>
-  <h1 class="logo">DILF <span>RADIO</span></h1>
-  <p class="tagline">Dads Into Legendary Finds — a place to find new music and gain a deeper appreciation of the music you already love.</p>
-
-  <div class="dial-wrap">
-    <div class="dial-track">
-      <div class="dial-needle"></div>
+  <div class="hdr-row">
+    <div class="brand">
+      <span class="station-id mono">ON AIR</span>
+      <div>
+        <h1 class="logo">DILF <span>RADIO</span></h1>
+        <p class="tagline">Dads Into Legendary Finds. A place to find new music and gain a deeper appreciation of the music you already love.</p>
+      </div>
     </div>
-    <div class="dial-labels mono">
-      <span>88.1</span><span>91.1 FM</span><span>94.5</span><span>98.7</span><span>104.3</span>
-    </div>
+    <nav class="freqnav mono">
+      <a href="#now-playing">NOW PLAYING</a>
+      <a href="#bands">THE LINEUP</a>
+      <a href="#years">SIGHTS AND SOUNDS</a>
+    </nav>
   </div>
-
-  <nav class="freqnav mono">
-    <a href="#now-playing">NOW PLAYING</a>
-    <a href="#bands">THE LINEUP</a>
-    <a href="#years">SIGHTS AND SOUNDS</a>
-    <a href="#setlists">SETLISTS</a>
-  </nav>
+  <div class="dial-wrap" aria-hidden="true">
+    <div class="dial-track"><div class="dial-needle"></div></div>
+    <div class="dial-labels mono"><span>88.1</span><span>91.1 FM</span><span>94.5</span><span>98.7</span><span>104.3</span></div>
+  </div>
 </header>
 
 <section id="now-playing">
@@ -309,7 +367,7 @@
     <span class="freq mono">91.1</span>
     <h2>Now Playing</h2>
   </div>
-  <p class="section-sub">Live in Chicagoland. The blues, guitar and jam shows I'm eyeing within 39 miles of the Loop, refreshed every morning. Past shows fall off on their own.</p>
+  <p class="section-sub">Live in Chicagoland. The blues, jam, Southern rock and funk shows I'm eyeing within 39 miles of the Loop, refreshed every morning. Past shows fall off on their own.</p>
 
   <div class="now-playing" id="np-next">
     <span class="pulse"></span>
@@ -333,19 +391,64 @@
     <div class="np-cards" id="np-new"></div>
   </div>
 
-  <div class="np-cols">
-    <div class="np-col" style="--c: var(--amber)">
-      <div class="np-col-head"><span class="freq-tag mono">BAND 1 // GUITARS &amp; BLUES</span><span class="np-count mono" id="np-n-b"></span></div>
-      <p class="np-col-sub">Gary Clark Jr., Marcus King, Tab Benoit, Anders Osborne territory. Blues-rock, guitar heroes, a little hard rock.</p>
+  <div class="np-viewbar">
+    <div class="np-toggle" role="group" aria-label="Sort the shows">
+      <button type="button" id="view-band" aria-pressed="true">BY BAND TYPE</button>
+      <button type="button" id="view-venue" aria-pressed="false">BY VENUE</button>
+    </div>
+    <span class="np-viewnote" id="np-viewnote">Four bands on the dial. Open whichever one you are in the mood for.</span>
+  </div>
+
+  <div class="np-grid" id="np-bandview">
+    <details class="np-col" id="np-cat-b" style="--c: var(--amber)">
+      <summary>
+        <div class="np-col-head"><span class="freq-tag mono">BAND 1 // BLUES &amp; HARD ROCK</span><span class="np-count mono" id="np-n-b"></span></div>
+        <p class="np-col-sub">Gary Clark Jr., Marcus King, Tab Benoit, Anders Osborne territory. Blues-rock, guitar heroes, a little hard rock.</p>
+        <div class="np-next"><span class="np-next-line" id="np-next-b"></span><span class="np-open mono" aria-hidden="true"></span></div>
+      </summary>
       <ol class="np-list" id="np-list-b"></ol>
-      <details class="np-more"><summary class="mono">SHOW ALL</summary><ol class="np-list" id="np-list-b-more"></ol></details>
-    </div>
-    <div class="np-col" style="--c: var(--teal)">
-      <div class="np-col-head"><span class="freq-tag mono">BAND 2 // THE JAM ROOM</span><span class="np-count mono" id="np-n-j"></span></div>
-      <p class="np-col-sub">Dead, Panic and Phish people. Plus the tribute acts that keep the tapes rolling.</p>
+    </details>
+    <details class="np-col" id="np-cat-j" style="--c: var(--teal)">
+      <summary>
+        <div class="np-col-head"><span class="freq-tag mono">BAND 2 // THE JAM ROOM</span><span class="np-count mono" id="np-n-j"></span></div>
+        <p class="np-col-sub">Dead, Panic and Phish people. Plus the tribute acts that keep the tapes rolling.</p>
+        <div class="np-next"><span class="np-next-line" id="np-next-j"></span><span class="np-open mono" aria-hidden="true"></span></div>
+      </summary>
       <ol class="np-list" id="np-list-j"></ol>
-      <details class="np-more"><summary class="mono">SHOW ALL</summary><ol class="np-list" id="np-list-j-more"></ol></details>
+    </details>
+    <details class="np-col" id="np-cat-s" style="--c: var(--gold)">
+      <summary>
+        <div class="np-col-head"><span class="freq-tag mono">BAND 3 // SOUTHERN &amp; ROOTS ROCK</span><span class="np-count mono" id="np-n-s"></span></div>
+        <p class="np-col-sub">Allman Brothers bloodlines, Tedeschi Trucks, Isbell and Blackberry Smoke country. Twang with the amps turned up.</p>
+        <div class="np-next"><span class="np-next-line" id="np-next-s"></span><span class="np-open mono" aria-hidden="true"></span></div>
+      </summary>
+      <ol class="np-list" id="np-list-s"></ol>
+    </details>
+    <details class="np-col" id="np-cat-f" style="--c: var(--bayou)">
+      <summary>
+        <div class="np-col-head"><span class="freq-tag mono">BAND 4 // NEW ORLEANS FUNK &amp; SOUL</span><span class="np-count mono" id="np-n-f"></span></div>
+        <p class="np-col-sub">Meters grooves, brass, organ and horns. Dumpstaphunk, Galactic, Trombone Shorty and anybody who makes a room move.</p>
+        <div class="np-next"><span class="np-next-line" id="np-next-f"></span><span class="np-open mono" aria-hidden="true"></span></div>
+      </summary>
+      <ol class="np-list" id="np-list-f"></ol>
+    </details>
+  </div>
+
+  <div class="vf" id="np-venueview" hidden>
+    <div class="vf-controls">
+      <label class="vf-f wide" for="vf-q">SEARCH<input id="vf-q" type="search" placeholder="Venue, neighborhood, suburb, band"></label>
+      <label class="vf-f" for="vf-area">AREA<select id="vf-area"><option value="">All areas</option></select></label>
+      <label class="vf-f" for="vf-band">BAND<select id="vf-band"><option value="">All four bands</option><option value="b">Blues &amp; hard rock</option><option value="j">The jam room</option><option value="s">Southern &amp; roots rock</option><option value="f">New Orleans funk &amp; soul</option></select></label>
+      <label class="vf-f" for="vf-sort">SORT<select id="vf-sort"><option value="mi">Closest first</option><option value="n">Most shows</option><option value="s">Next show first</option><option value="name">A to Z</option></select></label>
+      <label class="vf-f wide" for="vf-mx">MAX DISTANCE <output id="vf-mxo">39 mi</output><input id="vf-mx" type="range" min="1" max="39" value="39"></label>
+      <label class="vf-check" for="vf-all"><input id="vf-all" type="checkbox"> Include venues with nothing on the books</label>
     </div>
+    <div class="vf-sum">
+      <div class="vf-count" id="vf-count"></div>
+      <div class="vf-legend"><span><i style="background:var(--amber)"></i>Blues &amp; hard rock</span><span><i style="background:var(--teal)"></i>Jam</span><span><i style="background:var(--gold)"></i>Southern &amp; roots</span><span><i style="background:var(--bayou)"></i>Funk &amp; soul</span></div>
+    </div>
+    <div class="vf-list" id="vf-list"></div>
+    <div class="vf-empty" id="vf-empty" hidden>No venues match. Try widening the distance or clearing the search.</div>
   </div>
 
   <div class="np-block">
@@ -417,28 +520,6 @@
   </div>
 </section>
 
-<section id="setlists">
-  <div class="section-head">
-    <span class="freq mono">104.3</span>
-    <h2>Setlists</h2>
-  </div>
-  <p class="section-sub">Shows you've been to, or dream setlists you'd build for a band. One card per show.</p>
-
-  <div class="setlist">
-    <h3>Show / Tour Name</h3>
-    <span class="place">VENUE · CITY · DATE</span>
-    <ol class="mono">
-      <li>Opening track</li>
-      <li>Song two</li>
-      <li>Song three</li>
-      <li>Song four</li>
-      <li>Deep cut</li>
-      <li>Song six</li>
-      <li>Fan favorite</li>
-      <li>Closer / encore</li>
-    </ol>
-  </div>
-</section>
 
 <footer>
   DILF RADIO · DADS INTO LEGENDARY FINDS · BROADCAST FROM A BASEMENT, NOT A BOARDROOM
@@ -451,6 +532,8 @@
   var D = window.DILF_SHOWS;
   if (!D) { document.getElementById('np-next-track').textContent = 'Show report is off the air. Check back soon.'; return; }
   var TZ = 'America/Chicago';
+  var CAT = { b: '--amber', j: '--teal', s: '--gold', f: '--bayou' };
+  function col(c) { return 'var(' + (CAT[c] || '--gold') + ')'; }
   var today = new Intl.DateTimeFormat('en-CA', { timeZone: TZ }).format(new Date());
   function dt(s) { return new Date(s + 'T12:00:00'); }
   function fmt(s, o) { return dt(s).toLocaleDateString('en-US', o); }
@@ -485,7 +568,7 @@
 
   var fresh = live.filter(function (x) { return x.isNew; });
   document.getElementById('np-new').innerHTML = fresh.length ? fresh.map(function (x) {
-    return '<div class="np-card" style="--c: var(' + (x.c === 'j' ? '--teal' : '--amber') + ')"><span class="when">' + esc(whenLine(x)).toUpperCase() + '</span><h4>' + esc(x.a) + '</h4><div class="where">' + esc(x.v) + '</div>' + (x.n ? '<div class="why">' + esc(x.n) + '</div>' : '') + '</div>';
+    return '<div class="np-card" style="--c: ' + col(x.c) + '"><span class="when">' + esc(whenLine(x)).toUpperCase() + '</span><h4>' + esc(x.a) + '</h4><div class="where">' + esc(x.v) + '</div>' + (x.n ? '<div class="why">' + esc(x.n) + '</div>' : '') + '</div>';
   }).join('') : '<div class="np-empty">Nothing new on the wire this week.</div>';
 
   function row(x) {
@@ -493,19 +576,191 @@
     var tags = (on ? '<span class="np-tag hot">' + (x.e ? 'ON NOW' : 'TONIGHT') + '</span>' : '') + (x.isNew ? '<span class="np-tag new">NEW</span>' : '') + (x.t ? '<span class="np-tag">' + esc(x.t).toUpperCase() + '</span>' : '');
     return '<li><span class="d">' + when(x) + '</span><div><span class="a">' + esc(x.a) + '</span>' + tags + '<span class="v">' + esc(x.v) + '</span>' + (x.n ? '<span class="n">' + esc(x.n) + '</span>' : '') + '</div></li>';
   }
-  ['b', 'j'].forEach(function (c) {
+  ['b', 'j', 's', 'f'].forEach(function (c) {
     var L = live.filter(function (x) { return x.c === c; });
-    document.getElementById('np-n-' + c).textContent = L.length + ' SHOWS';
-    document.getElementById('np-list-' + c).innerHTML = L.slice(0, 8).map(row).join('') || '<li><span></span><span class="n">No shows on the books right now.</span></li>';
-    var more = L.slice(8);
-    var det = document.getElementById('np-list-' + c + '-more');
-    if (more.length) { det.innerHTML = more.map(row).join(''); det.parentNode.querySelector('summary').textContent = 'SHOW ALL ' + L.length + ' \u2192'; }
-    else det.parentNode.hidden = true;
+    document.getElementById('np-n-' + c).textContent = L.length + (L.length === 1 ? ' SHOW' : ' SHOWS');
+    document.getElementById('np-list-' + c).innerHTML = L.map(row).join('') || '<li><span></span><span class="n">No shows on the books right now.</span></li>';
+    var nx = L[0];
+    document.getElementById('np-next-' + c).innerHTML = nx ? (nx.s <= today ? 'Tonight: ' : 'Next: ') + '<b>' + esc(nx.a) + '</b>, ' + esc(fmt(nx.s, { month: 'short', day: 'numeric' })) : 'Nothing on the books yet.';
   });
 
   var drive = (D.drive || []).filter(function (x) { return (x.e || x.s) >= today; });
   document.getElementById('np-drive').innerHTML = drive.map(function (x) { return '<li><b>' + esc(x.a) + '</b> <span class="dim">' + esc(x.v) + ', ' + whenLine(x) + '</span></li>'; }).join('');
   if (!drive.length) document.getElementById('np-drive').parentNode.hidden = true;
+
+  /* ---------- VIEW TOGGLE + VENUE VIEW ---------- */
+  var VENUES = [
+    ["Chicago Theatre", "Loop", "Chicago: Downtown", 0.2, "Large"],
+    ["Symphony Center", "Loop", "Chicago: Downtown", 0.2, "Mid"],
+    ["CIBC Theatre", "Loop", "Chicago: Downtown", 0.2, "Mid"],
+    ["Chicago Cultural Center", "Loop", "Chicago: Downtown", 0.3, "Small"],
+    ["Jay Pritzker Pavilion", "Millennium Park", "Chicago: Downtown", 0.4, "Massive"],
+    ["Cadillac Palace Theatre", "Loop", "Chicago: Downtown", 0.4, "Large"],
+    ["House of Blues Chicago", "River North", "Chicago: Downtown", 0.4, "Mid"],
+    ["Auditorium Theatre", "Loop", "Chicago: Downtown", 0.5, "Large"],
+    ["Harris Theater", "Millennium Park", "Chicago: Downtown", 0.5, "Mid"],
+    ["Studebaker Theater", "Fine Arts Building", "Chicago: Downtown", 0.5, "Small"],
+    ["Andy's Jazz Club", "River North", "Chicago: Downtown", 0.6, "Small"],
+    ["Spybar", "River North", "Chicago: Downtown", 0.6, "Small"],
+    ["Lyric Opera House", "Loop", "Chicago: Downtown", 0.7, "Large"],
+    ["Sound-Bar", "River North", "Chicago: Downtown", 0.7, "Mid"],
+    ["Primary", "River North", "Chicago: Downtown", 0.8, "Small"],
+    ["Winter's Jazz Club", "Streeterville", "Chicago: Downtown", 0.8, "Small"],
+    ["Blue Chicago", "River North", "Chicago: Downtown", 0.8, "Small"],
+    ["Jazz Showcase", "Dearborn Station", "Chicago: Downtown", 0.9, "Small"],
+    ["Buddy Guy's Legends", "South Loop", "Chicago: Downtown", 0.9, "Small"],
+    ["Grant Park (festival grounds)", "Loop", "Chicago: Downtown", 1.0, "Massive"],
+    ["Garcia's Chicago", "West Loop", "Chicago: West Side", 1.5, "Small"],
+    ["City Winery Chicago", "West Loop", "Chicago: West Side", 1.6, "Small"],
+    ["Epiphany Center for the Arts", "West Town", "Chicago: West Side", 1.6, "Mid"],
+    ["Soldier Field", "Museum Campus", "Chicago: Downtown", 1.6, "Massive"],
+    ["Huntington Bank Pavilion", "Northerly Island", "Chicago: Downtown", 1.6, "Large"],
+    ["Bottom Lounge", "West Loop", "Chicago: West Side", 1.7, "Mid"],
+    ["Credit Union 1 Arena", "UIC", "Chicago: West Side", 1.8, "Large"],
+    ["United Center", "Near West Side", "Chicago: West Side", 2.0, "Massive"],
+    ["The Salt Shed", "Goose Island", "Chicago: West Side", 2.0, "Large"],
+    ["Joe's on Weed Street", "Near North Side", "Chicago: North Side", 2.0, "Mid"],
+    ["Wintrust Arena", "South Loop", "Chicago: South Side", 2.2, "Large"],
+    ["Cobra Lounge", "Near West Side", "Chicago: West Side", 2.3, "Small"],
+    ["Park West", "Lincoln Park", "Chicago: North Side", 2.6, "Mid"],
+    ["Reggies", "South Loop", "Chicago: South Side", 2.8, "Small"],
+    ["Thalia Hall", "Pilsen", "Chicago: South Side", 3.0, "Mid"],
+    ["Empty Bottle", "Ukrainian Village", "Chicago: West Side", 3.0, "Small"],
+    ["Chop Shop", "Wicker Park", "Chicago: West Side", 3.0, "Mid"],
+    ["Subterranean", "Wicker Park", "Chicago: West Side", 3.0, "Small"],
+    ["The Hideout", "Elston Corridor", "Chicago: North Side", 3.0, "Small"],
+    ["Kingston Mines", "Lincoln Park", "Chicago: North Side", 3.2, "Small"],
+    ["Radius Chicago", "Pilsen", "Chicago: South Side", 3.3, "Large"],
+    ["Lincoln Hall", "Lincoln Park", "Chicago: North Side", 3.3, "Small"],
+    ["Tonic Room", "Lincoln Park", "Chicago: North Side", 3.3, "Small"],
+    ["B.L.U.E.S.", "Lincoln Park", "Chicago: North Side", 3.4, "Small"],
+    ["Gallery Cabaret", "Bucktown", "Chicago: West Side", 3.5, "Small"],
+    ["Liar's Club", "Lincoln Park", "Chicago: North Side", 3.6, "Small"],
+    ["Rate Field", "Armour Square", "Chicago: South Side", 3.8, "Massive"],
+    ["Ramova Theatre", "Bridgeport", "Chicago: South Side", 4.0, "Mid"],
+    ["Concord Music Hall", "Logan Square", "Chicago: North Side", 4.2, "Mid"],
+    ["Cole's Bar", "Logan Square", "Chicago: North Side", 4.2, "Small"],
+    ["The Vic Theatre", "Lakeview", "Chicago: North Side", 4.3, "Mid"],
+    ["The Burlington", "Logan Square", "Chicago: North Side", 4.5, "Small"],
+    ["Elastic Arts", "Logan Square", "Chicago: North Side", 4.5, "Small"],
+    ["The Whistler", "Logan Square", "Chicago: North Side", 4.6, "Small"],
+    ["Rosa's Lounge", "Logan Square", "Chicago: North Side", 4.6, "Small"],
+    ["Metro", "Wrigleyville", "Chicago: North Side", 4.7, "Mid"],
+    ["Smartbar", "Wrigleyville", "Chicago: North Side", 4.7, "Small"],
+    ["Gman Tavern", "Wrigleyville", "Chicago: North Side", 4.7, "Small"],
+    ["Wrigley Field", "Wrigleyville", "Chicago: North Side", 4.8, "Massive"],
+    ["Schubas Tavern", "Lakeview", "Chicago: North Side", 4.8, "Small"],
+    ["Beat Kitchen", "Roscoe Village", "Chicago: North Side", 5.2, "Small"],
+    ["Constellation", "Roscoe Village", "Chicago: North Side", 5.3, "Small"],
+    ["Hungry Brain", "Roscoe Village", "Chicago: North Side", 5.3, "Small"],
+    ["Sleeping Village", "Avondale", "Chicago: North Side", 5.3, "Small"],
+    ["Martyrs'", "North Center", "Chicago: North Side", 6.0, "Small"],
+    ["Carol's Pub", "Uptown", "Chicago: North Side", 6.8, "Small"],
+    ["Old Town School of Folk Music", "Lincoln Square", "Chicago: North Side", 7.0, "Small"],
+    ["Color Club", "Irving Park", "Chicago: North Side", 7.0, "Small"],
+    ["Douglass Park (festival grounds)", "North Lawndale", "Chicago: West Side", 4.5, "Massive"],
+    ["Green Mill", "Uptown", "Chicago: North Side", 7.2, "Small"],
+    ["Riviera Theatre", "Uptown", "Chicago: North Side", 7.3, "Mid"],
+    ["Byline Bank Aragon Ballroom", "Uptown", "Chicago: North Side", 7.3, "Large"],
+    ["Logan Center for the Arts", "Hyde Park", "Chicago: South Side", 7.5, "Small"],
+    ["Mandel Hall", "Hyde Park", "Chicago: South Side", 7.5, "Mid"],
+    ["Rockefeller Chapel", "Hyde Park", "Chicago: South Side", 7.6, "Mid"],
+    ["South Shore Cultural Center", "South Shore", "Chicago: South Side", 9.0, "Mid"],
+    ["Patio Theater", "Portage Park", "Chicago: North Side", 9.5, "Mid"],
+    ["Rhapsody Theater", "Rogers Park", "Chicago: North Side", 9.8, "Small"],
+    ["Copernicus Center", "Jefferson Park", "Chicago: North Side", 10.0, "Mid"],
+    ["Cahn Auditorium", "Evanston", "North Suburbs", 12.0, "Mid"],
+    ["Pick-Staiger Concert Hall", "Evanston", "North Suburbs", 12.0, "Mid"],
+    ["SPACE", "Evanston", "North Suburbs", 12.0, "Small"],
+    ["North Shore Center for the Performing Arts", "Skokie", "North Suburbs", 13.0, "Mid"],
+    ["SeatGeek Stadium", "Bridgeview", "South Suburbs", 13.0, "Massive"],
+    ["Allstate Arena", "Rosemont", "Northwest Suburbs", 14.0, "Massive"],
+    ["Rosemont Theatre", "Rosemont", "Northwest Suburbs", 14.0, "Large"],
+    ["Joe's Live Rosemont", "Rosemont", "Northwest Suburbs", 14.0, "Mid"],
+    ["Rivers Casino Event Center", "Des Plaines", "Northwest Suburbs", 15.0, "Mid"],
+    ["McAninch Arts Center", "Glen Ellyn", "West Suburbs", 22.0, "Mid"],
+    ["Ravinia Festival", "Highland Park", "North Suburbs", 23.0, "Massive"],
+    ["Metropolis Performing Arts Centre", "Arlington Heights", "Northwest Suburbs", 23.0, "Small"],
+    ["Credit Union 1 Amphitheatre", "Tinley Park", "South Suburbs", 25.0, "Massive"],
+    ["Prairie Center for the Arts", "Schaumburg", "Northwest Suburbs", 26.0, "Small"],
+    ["Durty Nellie's", "Palatine", "Northwest Suburbs", 27.0, "Small"],
+    ["Wentz Concert Hall", "Naperville", "West Suburbs", 28.0, "Small"],
+    ["NOW Arena", "Hoffman Estates", "Northwest Suburbs", 29.0, "Large"],
+    ["Mickey Finn's Brewery", "Libertyville", "North Suburbs", 33.0, "Small"],
+    ["Hemmens Cultural Center", "Elgin", "Northwest Suburbs", 35.0, "Mid"],
+    ["Genesee Theatre", "Waukegan", "North Suburbs", 37.0, "Mid"]
+  ];
+  function key(n) { return String(n).toLowerCase().replace(/\(.*?\)/g, '').replace(/^the\s+/, '').replace(/[^a-z0-9]/g, ''); }
+  var byKey = VENUES.map(function (v) { return { k: key(v[0]), name: v[0], where: v[1], area: v[2], mi: v[3], size: v[4] }; });
+  function findVenue(name) {
+    var k = key(name);
+    for (var i = 0; i < byKey.length; i++) { var b = byKey[i]; if (b.k === k || b.k.indexOf(k) === 0 || k.indexOf(b.k) === 0) return b; }
+    return null;
+  }
+  var groups = {};
+  byKey.forEach(function (v) { groups[v.name] = { v: v, shows: [] }; });
+  live.forEach(function (x) {
+    var v = findVenue(x.v);
+    if (!v) { v = { k: key(x.v), name: x.v, where: '', area: '', mi: x.mi || 0, size: '' }; if (!groups[v.name]) groups[v.name] = { v: v, shows: [] }; }
+    groups[v.name].shows.push(x);
+  });
+  var AREAS = ['Chicago: Downtown', 'Chicago: North Side', 'Chicago: West Side', 'Chicago: South Side', 'North Suburbs', 'Northwest Suburbs', 'West Suburbs', 'South Suburbs'];
+  var $ = function (id) { return document.getElementById(id); };
+  AREAS.forEach(function (a) { var o = document.createElement('option'); o.value = a; o.textContent = a; $('vf-area').appendChild(o); });
+
+  function vrow(x) {
+    var on = x.s <= today;
+    var tags = (on ? '<span class="np-tag hot">' + (x.e ? 'ON NOW' : 'TONIGHT') + '</span>' : '') + (x.isNew ? '<span class="np-tag new">NEW</span>' : '') + (x.t ? '<span class="np-tag">' + esc(x.t).toUpperCase() + '</span>' : '');
+    return '<li style="--c: ' + col(x.c) + '"><span class="d">' + when(x) + '</span><div><span class="vf-band" aria-hidden="true"></span><span class="a">' + esc(x.a) + '</span>' + tags + (x.n ? '<span class="n">' + esc(x.n) + '</span>' : '') + '</div></li>';
+  }
+  function renderVenues() {
+    var q = $('vf-q').value.trim().toLowerCase(), area = $('vf-area').value, band = $('vf-band').value, mx = +$('vf-mx').value, all = $('vf-all').checked, sort = $('vf-sort').value;
+    $('vf-mxo').textContent = mx + ' mi';
+    var out = [];
+    Object.keys(groups).forEach(function (n) {
+      var g = groups[n], v = g.v;
+      if (v.mi > mx || (area && v.area !== area)) return;
+      var shows = g.shows.filter(function (x) { return !band || x.c === band; });
+      var venueHit = !q || (v.name + ' ' + v.where + ' ' + v.area).toLowerCase().indexOf(q) > -1;
+      if (q && !venueHit) shows = shows.filter(function (x) { return (x.a + ' ' + (x.n || '')).toLowerCase().indexOf(q) > -1; });
+      if (!shows.length && (!all || !venueHit || band && g.shows.length)) return;
+      out.push({ v: v, shows: shows });
+    });
+    out.sort(function (a, b) {
+      if (sort === 'n') return b.shows.length - a.shows.length || a.v.mi - b.v.mi;
+      if (sort === 's') { var x = a.shows[0] ? a.shows[0].s : '9', y = b.shows[0] ? b.shows[0].s : '9'; return x < y ? -1 : x > y ? 1 : a.v.mi - b.v.mi; }
+      if (sort === 'name') return a.v.name.localeCompare(b.v.name);
+      return a.v.mi - b.v.mi || a.v.name.localeCompare(b.v.name);
+    });
+    var booked = out.filter(function (o) { return o.shows.length; }).length;
+    var total = out.reduce(function (t, o) { return t + o.shows.length; }, 0);
+    $('vf-count').innerHTML = booked + ' venues<span>' + total + ' shows' + (all ? ', ' + (out.length - booked) + ' quiet rooms' : '') + '</span>';
+    $('vf-list').innerHTML = out.map(function (o) {
+      var v = o.v;
+      var where = [v.where, v.area.replace('Chicago: ', '')].filter(Boolean).join(' \u00b7 ');
+      return '<article class="vf-venue' + (o.shows.length ? '' : ' quiet') + '"><div class="vf-vhead"><h4 class="vf-vname">' + esc(v.name) + '</h4><span class="vf-mi">' + Number(v.mi).toFixed(1) + ' MI</span>' + (where ? '<span class="vf-where">' + esc(where) + '</span>' : '') + '</div>' +
+        (o.shows.length ? '<ol class="vf-shows">' + o.shows.map(vrow).join('') + '</ol>' : '<p class="vf-none">Nothing on the books in my lane right now.</p>') + '</article>';
+    }).join('');
+    $('vf-empty').hidden = out.length > 0;
+  }
+  ['vf-q', 'vf-area', 'vf-band', 'vf-sort', 'vf-mx', 'vf-all'].forEach(function (id) { $(id).addEventListener('input', renderVenues); });
+
+  var NOTES = { band: 'Four bands on the dial. Open whichever one you are in the mood for.', venue: 'Every room on the list, with what is coming through.' };
+  function setView(v) {
+    var isVenue = v === 'venue';
+    $('view-band').setAttribute('aria-pressed', String(!isVenue));
+    $('view-venue').setAttribute('aria-pressed', String(isVenue));
+    $('np-bandview').hidden = isVenue;
+    $('np-venueview').hidden = !isVenue;
+    $('np-viewnote').textContent = NOTES[isVenue ? 'venue' : 'band'];
+    if (isVenue) renderVenues();
+    try { localStorage.setItem('dilf-view', v); } catch (e) {}
+  }
+  $('view-band').addEventListener('click', function () { setView('band'); });
+  $('view-venue').addEventListener('click', function () { setView('venue'); });
+  var saved = 'band';
+  try { saved = localStorage.getItem('dilf-view') || 'band'; } catch (e) {}
+  setView(saved);
 })();
 </script>
 </body>
