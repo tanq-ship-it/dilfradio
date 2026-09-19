@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DILF Radio — Dads Into Legendary Finds</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,700&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --walnut: #2B1B14;
+    --vinyl: #181210;
+    --cream: #F3EAD8;
+    --amber: #C8682B;
+    --teal: #3F6B66;
+    --gold: #D9A441;
+    --line: rgba(243,234,216,0.14);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--vinyl);
+    color: var(--cream);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.55;
+  }
+  h1, h2, h3, .display { font-family: 'Fraunces', serif; }
+  .mono { font-family: 'Space Mono', monospace; letter-spacing: 0.04em; }
+
+  /* ---------- HEADER / DIAL ---------- */
+  header {
+    position: relative;
+    background: radial-gradient(120% 140% at 50% -20%, var(--walnut) 0%, var(--vinyl) 65%);
+    border-bottom: 1px solid var(--line);
+    padding: 64px 24px 48px;
+    text-align: center;
+    overflow: hidden;
+  }
+  .station-id {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    border-radius: 999px;
+    padding: 5px 14px;
+    margin-bottom: 22px;
+    letter-spacing: 0.12em;
+  }
+  h1.logo {
+    font-size: clamp(48px, 9vw, 104px);
+    font-weight: 700;
+    margin: 0;
+    color: var(--cream);
+    letter-spacing: -0.02em;
+  }
+  h1.logo span { color: var(--amber); }
+  .tagline {
+    margin: 10px 0 0;
+    font-size: clamp(15px, 2vw, 19px);
+    color: rgba(243,234,216,0.72);
+    font-style: italic;
+  }
+
+  /* Tuning dial */
+  .dial-wrap {
+    max-width: 640px;
+    margin: 46px auto 0;
+  }
+  .dial-track {
+    position: relative;
+    height: 3px;
+    background: linear-gradient(90deg, var(--teal), var(--amber), var(--gold));
+    border-radius: 2px;
+  }
+  .dial-needle {
+    position: absolute;
+    top: -9px;
+    left: 28%;
+    width: 2px;
+    height: 21px;
+    background: var(--cream);
+    box-shadow: 0 0 8px var(--cream);
+  }
+  .dial-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: rgba(243,234,216,0.5);
+  }
+  nav.freqnav {
+    display: flex;
+    justify-content: center;
+    gap: 28px;
+    margin-top: 36px;
+    flex-wrap: wrap;
+  }
+  nav.freqnav a {
+    color: var(--cream);
+    text-decoration: none;
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    opacity: 0.78;
+    border-bottom: 1px solid transparent;
+    padding-bottom: 4px;
+    transition: opacity 0.2s, border-color 0.2s;
+  }
+  nav.freqnav a:hover { opacity: 1; border-color: var(--amber); }
+
+  /* ---------- SECTIONS ---------- */
+  section { padding: 76px 24px; max-width: 1080px; margin: 0 auto; }
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 36px;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 18px;
+  }
+  .section-head .freq {
+    font-family: 'Space Mono', monospace;
+    color: var(--amber);
+    font-size: 13px;
+  }
+  .section-head h2 { font-size: clamp(26px, 4vw, 36px); margin: 0; }
+  .section-sub { color: rgba(243,234,216,0.6); max-width: 620px; margin-top: -22px; margin-bottom: 36px; font-size: 15px; }
+
+  /* Now playing strip */
+  .now-playing {
+    background: var(--walnut);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 22px 26px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+  .pulse {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--amber);
+    box-shadow: 0 0 0 0 rgba(200,104,43,0.6);
+    animation: pulse 1.8s infinite;
+    flex-shrink: 0;
+  }
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(200,104,43,0.55); }
+    70% { box-shadow: 0 0 0 10px rgba(200,104,43,0); }
+    100% { box-shadow: 0 0 0 0 rgba(200,104,43,0); }
+  }
+  .now-playing .track { font-weight: 600; }
+  .now-playing .meta { color: rgba(243,234,216,0.55); font-size: 14px; }
+
+  /* Band cards */
+  .band-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 22px;
+  }
+  .band-card {
+    background: var(--walnut);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 26px;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .band-card:hover { transform: translateY(-3px); border-color: var(--amber); }
+  .band-card .freq-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    color: var(--gold);
+    margin-bottom: 10px;
+    display: block;
+  }
+  .band-card h3 { margin: 0 0 10px; font-size: 21px; }
+  .band-card p { font-size: 14.5px; color: rgba(243,234,216,0.78); margin-bottom: 16px; }
+  .playlist-stub {
+    border: 1px dashed var(--line);
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    color: rgba(243,234,216,0.55);
+  }
+
+  /* Blog / year posts */
+  .post-list { display: flex; flex-direction: column; gap: 0; }
+  .post-row {
+    display: block;
+    padding: 26px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .post-row:last-child { border-bottom: none; }
+  .post-year {
+    font-family: 'Fraunces', serif;
+    font-size: 38px;
+    color: var(--amber);
+    font-weight: 700;
+  }
+  .post-row h3 { margin: 0 0 8px; font-size: 19px; }
+  .post-row p { margin: 0; color: rgba(243,234,216,0.72); font-size: 14.5px; }
+  .post-tag {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--teal);
+    margin-top: 10px;
+    letter-spacing: 0.05em;
+  }
+
+  /* Setlist ticket */
+  .setlist {
+    background: var(--walnut);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 28px;
+    position: relative;
+  }
+  .setlist h3 { margin: 0 0 4px; }
+  .setlist .place { color: var(--gold); font-family: 'Space Mono', monospace; font-size: 13px; margin-bottom: 18px; display: block; }
+  .setlist ol { padding-left: 20px; margin: 0; columns: 2; column-gap: 32px; }
+  .setlist li { margin-bottom: 8px; font-size: 14.5px; }
+
+
+  /* ---------- 91.1 NOW PLAYING: SHOW REPORT ---------- */
+  .np-stamp { font-size: 11px; color: rgba(243,234,216,0.45); margin: 10px 0 0; letter-spacing: 0.08em; }
+  .np-block { margin-top: 40px; }
+  .np-h { font-size: 21px; margin: 0 0 16px; }
+  .np-label { font-size: 11px; color: var(--gold); letter-spacing: 0.1em; }
+  .np-changes { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 22px; }
+  .np-changes ul, .np-drive { margin: 8px 0 0; padding-left: 18px; font-size: 14.5px; color: rgba(243,234,216,0.82); }
+  .np-changes li, .np-drive li { margin-bottom: 6px; }
+  .np-changes .dim, .np-drive .dim { color: rgba(243,234,216,0.5); }
+  .np-changes li.none { list-style: none; margin-left: -18px; color: rgba(243,234,216,0.5); }
+  .np-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 16px; }
+  .np-card { background: var(--walnut); border: 1px solid var(--line); border-radius: 10px; padding: 18px 20px; border-top: 3px solid var(--c, var(--gold)); }
+  .np-card .when { font-family: 'Space Mono', monospace; font-size: 12px; color: var(--gold); }
+  .np-card h4 { font-family: 'Fraunces', serif; font-size: 19px; margin: 6px 0 4px; font-weight: 500; }
+  .np-card .where { font-size: 13.5px; color: rgba(243,234,216,0.6); }
+  .np-card .why { font-size: 13.5px; color: rgba(243,234,216,0.75); margin-top: 8px; }
+  .np-empty { color: rgba(243,234,216,0.5); font-size: 14.5px; border: 1px dashed var(--line); border-radius: 10px; padding: 14px 16px; }
+  .np-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 22px; margin-top: 40px; }
+  .np-col { background: var(--walnut); border: 1px solid var(--line); border-radius: 10px; padding: 24px 24px 18px; border-top: 3px solid var(--c); }
+  .np-col-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+  .np-col .freq-tag { font-size: 12px; color: var(--c); }
+  .np-count { font-size: 11px; color: rgba(243,234,216,0.5); }
+  .np-col-sub { font-size: 14px; color: rgba(243,234,216,0.65); margin: 8px 0 14px; }
+  .np-list { list-style: none; margin: 0; padding: 0; }
+  .np-list li { display: grid; grid-template-columns: 78px 1fr; gap: 12px; padding: 11px 0; border-top: 1px solid var(--line); }
+  .np-list .d { font-family: 'Space Mono', monospace; font-size: 12px; color: var(--c); line-height: 1.5; }
+  .np-list .a { font-weight: 600; font-size: 15px; }
+  .np-list .v { display: block; font-size: 13px; color: rgba(243,234,216,0.55); }
+  .np-list .n { display: block; font-size: 13px; color: rgba(243,234,216,0.7); }
+  .np-tag { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.08em; padding: 2px 6px; border-radius: 4px; margin-left: 6px; vertical-align: 2px; border: 1px solid var(--line); color: rgba(243,234,216,0.6); }
+  .np-tag.hot { background: var(--amber); border-color: var(--amber); color: var(--vinyl); }
+  .np-tag.new { border-color: var(--gold); color: var(--gold); }
+  .np-more summary { cursor: pointer; font-size: 12px; color: var(--gold); letter-spacing: 0.08em; padding: 12px 0 4px; list-style: none; }
+  .np-more summary::-webkit-details-marker { display: none; }
+  .np-more[open] summary { color: rgba(243,234,216,0.5); }
+  .np-more summary:focus-visible, nav.freqnav a:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+  @media (prefers-reduced-motion: reduce) { .pulse { animation: none; } }
+  @media (max-width: 600px) { .np-cols { grid-template-columns: 1fr; } .np-list li { grid-template-columns: 66px 1fr; } }
+
+  footer {
+    text-align: center;
+    padding: 48px 24px 64px;
+    border-top: 1px solid var(--line);
+    color: rgba(243,234,216,0.45);
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+  }
+
+  @media (max-width: 600px) {
+    .post-row { grid-template-columns: 70px 1fr; }
+    .post-year { font-size: 26px; }
+    .setlist ol { columns: 1; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <span class="station-id mono">ON AIR</span>
+  <h1 class="logo">DILF <span>RADIO</span></h1>
+  <p class="tagline">Dads Into Legendary Finds — a place to find new music and gain a deeper appreciation of the music you already love.</p>
+
+  <div class="dial-wrap">
+    <div class="dial-track">
+      <div class="dial-needle"></div>
+    </div>
+    <div class="dial-labels mono">
+      <span>88.1</span><span>91.1 FM</span><span>94.5</span><span>98.7</span><span>104.3</span>
+    </div>
+  </div>
+
+  <nav class="freqnav mono">
+    <a href="#now-playing">NOW PLAYING</a>
+    <a href="#bands">THE LINEUP</a>
+    <a href="#years">SIGHTS AND SOUNDS</a>
+    <a href="#setlists">SETLISTS</a>
+  </nav>
+</header>
+
+<section id="now-playing">
+  <div class="section-head">
+    <span class="freq mono">91.1</span>
+    <h2>Now Playing</h2>
+  </div>
+  <p class="section-sub">Live in Chicagoland. The blues, guitar and jam shows I'm eyeing within 39 miles of the Loop, refreshed every morning. Past shows fall off on their own.</p>
+
+  <div class="now-playing" id="np-next">
+    <span class="pulse"></span>
+    <div>
+      <span class="track" id="np-next-track">Tuning in...</span>
+      <p class="meta" id="np-next-meta" style="margin:6px 0 0;"></p>
+    </div>
+  </div>
+  <p class="np-stamp mono" id="np-stamp"></p>
+
+  <div class="np-block" id="np-changes-block">
+    <h3 class="np-h">Since the last broadcast</h3>
+    <div class="np-changes">
+      <div><span class="np-label mono">ADDED</span><ul id="np-added"></ul></div>
+      <div><span class="np-label mono">DROPPED</span><ul id="np-removed"></ul></div>
+    </div>
+  </div>
+
+  <div class="np-block">
+    <h3 class="np-h">Just announced</h3>
+    <div class="np-cards" id="np-new"></div>
+  </div>
+
+  <div class="np-cols">
+    <div class="np-col" style="--c: var(--amber)">
+      <div class="np-col-head"><span class="freq-tag mono">BAND 1 // GUITARS &amp; BLUES</span><span class="np-count mono" id="np-n-b"></span></div>
+      <p class="np-col-sub">Gary Clark Jr., Marcus King, Tab Benoit, Anders Osborne territory. Blues-rock, guitar heroes, a little hard rock.</p>
+      <ol class="np-list" id="np-list-b"></ol>
+      <details class="np-more"><summary class="mono">SHOW ALL</summary><ol class="np-list" id="np-list-b-more"></ol></details>
+    </div>
+    <div class="np-col" style="--c: var(--teal)">
+      <div class="np-col-head"><span class="freq-tag mono">BAND 2 // THE JAM ROOM</span><span class="np-count mono" id="np-n-j"></span></div>
+      <p class="np-col-sub">Dead, Panic and Phish people. Plus the tribute acts that keep the tapes rolling.</p>
+      <ol class="np-list" id="np-list-j"></ol>
+      <details class="np-more"><summary class="mono">SHOW ALL</summary><ol class="np-list" id="np-list-j-more"></ol></details>
+    </div>
+  </div>
+
+  <div class="np-block">
+    <h3 class="np-h">Worth the drive</h3>
+    <ul class="np-drive" id="np-drive"></ul>
+  </div>
+</section>
+
+<section id="bands">
+  <div class="section-head">
+    <span class="freq mono">94.5</span>
+    <h2>The Lineup</h2>
+  </div>
+  <p class="section-sub">Here's a sample of artists that are currently in the soundtrack of my life. I know I am always on the hunt for new music and I am sure you are too. Take a look and a listen. I hope you find something that makes you smile. - Kevin</p>
+
+  <div class="band-grid">
+    <div class="band-card">
+      <span class="freq-tag mono">FREQ // 01</span>
+      <h3>Marcus King Band</h3>
+      <p>A South Carolina blues-rock outfit led by guitarist Marcus King, who started gigging alongside his bluesman father as a kid and built the band's sound into a fusion of soul, blues, rock, and jazz. His playing and singing have carried him from the jam-band circuit to a Grammy nomination, with a catalog that keeps stretching into gospel, folk, and cosmic Americana.</p>
+      <div class="playlist-stub">▶ embed playlist link here (Spotify / Apple Music iframe)</div>
+    </div>
+    <div class="band-card">
+      <span class="freq-tag mono">FREQ // 02</span>
+      <h3>Tab Benoit</h3>
+      <p>A Louisiana guitarist and singer out of Houma whose bayou blues runs thick with Cajun seasoning and not much else, no pedals, just a Telecaster and a Category 5 amp. He's also spent decades fighting for the Gulf Coast wetlands through the organization he founded, Voice of the Wetlands, so the swamp shows up in both his sound and his second job.</p>
+      <div class="playlist-stub">▶ embed playlist link here</div>
+    </div>
+    <div class="band-card">
+      <span class="freq-tag mono">FREQ // 03</span>
+      <h3>Gary Clark Jr.</h3>
+      <p>An Austin guitarist and singer who fuses blues, rock, and soul with touches of hip hop, mentored early on by Austin blues legends and often described as carrying the future of Texas blues on his shoulders. Multiple Grammy wins later, he's still rooted in that same gritty, soulful tone.</p>
+      <div class="playlist-stub">▶ embed playlist link here</div>
+    </div>
+  </div>
+</section>
+
+<section id="years">
+  <div class="section-head">
+    <span class="freq mono">98.7</span>
+    <h2>Sights and Sounds</h2>
+  </div>
+  <p class="section-sub">The backstory behind music, artists and the times they live in fascinate me. No album, no song and no artistic career is made in a vacuum. Here's some stories and insights of my own that may pique your interest.</p>
+
+  <div class="post-list">
+    <div class="post-row">
+      <div>
+        <h3>Anders Osborne: the show I missed, the new appreciation I found</h3>
+        <p>I first caught Osborne live at Jazz Fest about five years ago and walked away floored, the kind of set that rearranges what you think a guitarist can do. I saw him twice live after that, sold each time on him as a live force, but I'd never really sat with the studio records. I was ready for my third visit with him at Garcia's in Chicago. Life got in the way and I had to cancel. So I've spent the week digging into his catalog instead, and it's turned into its own kind of find, the songwriting, the tone, the patience in his playing on record, none of which I'd given proper attention until now. Here's a little taste of what he does.</p>
+        <a href="https://open.spotify.com/playlist/7I1kJ06cUm9oyQOTQTuKyy?si=58805eb1cf3242ce" target="_blank" rel="noopener" style="color: var(--gold); font-family: 'Space Mono', monospace; font-size: 12px; text-decoration: none; display: inline-block; margin-top: 10px;">▶ LISTEN ON SPOTIFY →</a>
+        <span class="post-tag mono" style="display:block; margin-top:10px;">SIGHTS AND SOUNDS</span>
+      </div>
+    </div>
+    <div class="post-row">
+      <div>
+        <h3>1971: The year that changed rock and roll</h3>
+        <p>Drop your draft here — the records that came out, what was happening in the world, why that year specifically earns its own post.</p>
+        <span class="post-tag mono">SIGHTS AND SOUNDS</span>
+      </div>
+    </div>
+    <div class="post-row">
+      <div>
+        <h3>Six Modern Blues Artists You Need to Hear</h3>
+        <p>We all know Joe Bonamassa, Gary Clark Jr., and Derek Trucks keep modern blues alive in arenas. But go a little deeper and there are six more players carrying the torch you've probably never heard of.</p>
+        <a href="https://happybluesman.com/6-modern-blues-artists-need-hear/" target="_blank" rel="noopener" style="color: var(--gold); font-family: 'Space Mono', monospace; font-size: 12px; text-decoration: none; display: inline-block; margin-top: 10px;">READ THE ARTICLE →</a>
+        <span class="post-tag mono" style="display:block; margin-top:10px;">SIGHTS AND SOUNDS</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="setlists">
+  <div class="section-head">
+    <span class="freq mono">104.3</span>
+    <h2>Setlists</h2>
+  </div>
+  <p class="section-sub">Shows you've been to, or dream setlists you'd build for a band. One card per show.</p>
+
+  <div class="setlist">
+    <h3>Show / Tour Name</h3>
+    <span class="place">VENUE · CITY · DATE</span>
+    <ol class="mono">
+      <li>Opening track</li>
+      <li>Song two</li>
+      <li>Song three</li>
+      <li>Song four</li>
+      <li>Deep cut</li>
+      <li>Song six</li>
+      <li>Fan favorite</li>
+      <li>Closer / encore</li>
+    </ol>
+  </div>
+</section>
+
+<footer>
+  DILF RADIO · DADS INTO LEGENDARY FINDS · BROADCAST FROM A BASEMENT, NOT A BOARDROOM
+</footer>
+
+
+<script src="shows.js"></script>
+<script>
+(function () {
+  var D = window.DILF_SHOWS;
+  if (!D) { document.getElementById('np-next-track').textContent = 'Show report is off the air. Check back soon.'; return; }
+  var TZ = 'America/Chicago';
+  var today = new Intl.DateTimeFormat('en-CA', { timeZone: TZ }).format(new Date());
+  function dt(s) { return new Date(s + 'T12:00:00'); }
+  function fmt(s, o) { return dt(s).toLocaleDateString('en-US', o); }
+  function esc(x) { return String(x).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function when(x) {
+    var yr = dt(x.s).getFullYear() !== dt(today).getFullYear() ? ' ' + String(dt(x.s).getFullYear()).slice(2) : '';
+    if (!x.e) return fmt(x.s, { weekday: 'short' }).toUpperCase() + '<br>' + fmt(x.s, { month: 'short', day: 'numeric' }).toUpperCase() + yr;
+    return fmt(x.s, { month: 'short', day: 'numeric' }).toUpperCase() + '&ndash;<br>' + fmt(x.e, { month: dt(x.e).getMonth() === dt(x.s).getMonth() ? undefined : 'short', day: 'numeric' }).toUpperCase() + yr;
+  }
+  function whenLine(x) { return fmt(x.s, { weekday: 'short', month: 'short', day: 'numeric' }) + (x.e ? ' to ' + fmt(x.e, { month: 'short', day: 'numeric' }) : ''); }
+  var live = D.shows.filter(function (x) { return (x.e || x.s) >= today; }).sort(function (a, b) { return a.s < b.s ? -1 : a.s > b.s ? 1 : a.a < b.a ? -1 : 1; });
+
+  var next = live[0];
+  if (next) {
+    var on = next.s <= today;
+    document.getElementById('np-next-track').textContent = (on ? 'On tonight: ' : 'Next up: ') + next.a;
+    document.getElementById('np-next-meta').textContent = next.v + ' \u00b7 ' + whenLine(next) + (next.n ? ' \u00b7 ' + next.n : '');
+  } else {
+    document.getElementById('np-next-track').textContent = 'Quiet on the dial. New shows coming soon.';
+  }
+  document.getElementById('np-stamp').textContent = 'UPDATED ' + fmt(D.updated, { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' }).toUpperCase();
+
+  function chg(list) {
+    return list.length ? list.map(function (x) { return '<li><b>' + esc(x.a) + '</b>, ' + esc(x.v) + (x.s ? ', ' + fmt(x.s, { month: 'short', day: 'numeric' }) : '') + (x.why ? ' <span class="dim">(' + esc(x.why) + ')</span>' : '') + '</li>'; }).join('') : '<li class="none">Nothing.</li>';
+  }
+  if (D.prev) {
+    document.getElementById('np-added').innerHTML = chg(D.added || []);
+    document.getElementById('np-removed').innerHTML = chg(D.removed || []);
+  } else {
+    document.getElementById('np-changes-block').hidden = true;
+  }
+
+  var fresh = live.filter(function (x) { return x.isNew; });
+  document.getElementById('np-new').innerHTML = fresh.length ? fresh.map(function (x) {
+    return '<div class="np-card" style="--c: var(' + (x.c === 'j' ? '--teal' : '--amber') + ')"><span class="when">' + esc(whenLine(x)).toUpperCase() + '</span><h4>' + esc(x.a) + '</h4><div class="where">' + esc(x.v) + '</div>' + (x.n ? '<div class="why">' + esc(x.n) + '</div>' : '') + '</div>';
+  }).join('') : '<div class="np-empty">Nothing new on the wire this week.</div>';
+
+  function row(x) {
+    var on = x.s <= today;
+    var tags = (on ? '<span class="np-tag hot">' + (x.e ? 'ON NOW' : 'TONIGHT') + '</span>' : '') + (x.isNew ? '<span class="np-tag new">NEW</span>' : '') + (x.t ? '<span class="np-tag">' + esc(x.t).toUpperCase() + '</span>' : '');
+    return '<li><span class="d">' + when(x) + '</span><div><span class="a">' + esc(x.a) + '</span>' + tags + '<span class="v">' + esc(x.v) + '</span>' + (x.n ? '<span class="n">' + esc(x.n) + '</span>' : '') + '</div></li>';
+  }
+  ['b', 'j'].forEach(function (c) {
+    var L = live.filter(function (x) { return x.c === c; });
+    document.getElementById('np-n-' + c).textContent = L.length + ' SHOWS';
+    document.getElementById('np-list-' + c).innerHTML = L.slice(0, 8).map(row).join('') || '<li><span></span><span class="n">No shows on the books right now.</span></li>';
+    var more = L.slice(8);
+    var det = document.getElementById('np-list-' + c + '-more');
+    if (more.length) { det.innerHTML = more.map(row).join(''); det.parentNode.querySelector('summary').textContent = 'SHOW ALL ' + L.length + ' \u2192'; }
+    else det.parentNode.hidden = true;
+  });
+
+  var drive = (D.drive || []).filter(function (x) { return (x.e || x.s) >= today; });
+  document.getElementById('np-drive').innerHTML = drive.map(function (x) { return '<li><b>' + esc(x.a) + '</b> <span class="dim">' + esc(x.v) + ', ' + whenLine(x) + '</span></li>'; }).join('');
+  if (!drive.length) document.getElementById('np-drive').parentNode.hidden = true;
+})();
+</script>
+</body>
+</html>
